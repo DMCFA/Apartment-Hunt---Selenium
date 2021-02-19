@@ -3,12 +3,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
 from time import sleep
+from sms_manager import SmsManager
+import os
 
 CHROME_PATH = r"C:\Users\duart\Desktop\Code\chromedriver.exe"
 FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfcdvgqGuK_cx2DZjQytULKEf6WHKWwR8Rrb6B-m9wnJymEiw/viewform?usp=sf_link"
 LOCATION = "all midtown"
 MAX_PRICE = 3000
-
+message = "Please complete the captcha in order to proceed."
+email = os.environ.get("email")
 
 class ApartmentHuntBot:
 
@@ -93,21 +96,27 @@ class ApartmentHuntBot:
         pass
 
     def captcha(self):
-        """function used to bypass the website captcha"""
-        sleep(3)
-        captcha = self.driver.find_element_by_xpath('/html/body/div/iframe[0]')
-        self.driver.switch_to.frame(captcha)
-        captcha_loc = captcha.location
-        print(captcha_loc)
-        captcha_x = captcha_loc["x"]
-        captcha_y = captcha_loc["y"]
-        self.actions.tap_and_hold(captcha_x, captcha_y)
-        sleep(5)
-        self.actions.release(captcha_x, captcha_y)
-        self.search_input()
+        """function used to send a text and email so I can bypass the captcha manually"""
+        notification.send_sms(message=message)
+        notification.send_emails(emails=email, message=message)
+        sleep(25)
+
+        ### this code snippet is for reference only, not to be used ###
+        # sleep(3)
+        # captcha = self.driver.find_element_by_xpath('/html/body/div/iframe[0]')
+        # self.driver.switch_to.frame(captcha)
+        # captcha_loc = captcha.location
+        # print(captcha_loc)
+        # captcha_x = captcha_loc["x"]
+        # captcha_y = captcha_loc["y"]
+        # self.actions.tap_and_hold(captcha_x, captcha_y)
+        # sleep(5)
+        # self.actions.release(captcha_x, captcha_y)
+        # self.search_input()
 
 
 bot = ApartmentHuntBot()
+notification = SmsManager()
 
 bot.search_input()
 sleep(5)
