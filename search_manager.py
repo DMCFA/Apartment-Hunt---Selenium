@@ -8,7 +8,6 @@ from notification_manager import NotificationManager
 
 
 CHROME_PATH = os.environ.get("file_path") # your local path to the chrome driver app
-FORM = "https://docs.google.com/forms/d/e/1FAIpQLSfcdvgqGuK_cx2DZjQytULKEf6WHKWwR8Rrb6B-m9wnJymEiw/viewform?usp=sf_link"
 LOCATION = "all midtown"
 MAX_PRICE = 3000
 message = "Please complete the captcha in order to proceed."
