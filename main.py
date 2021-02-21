@@ -9,4 +9,6 @@ notification = NotificationManager()
 bot.search_input()
 sleep(5)
 
+bot.get_search_results()
+
 bot.driver.quit()

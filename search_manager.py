@@ -4,6 +4,7 @@ from selenium.webdriver.common.touch_actions import TouchActions
 from selenium.common.exceptions import ElementClickInterceptedException, NoSuchElementException
 from time import sleep
 import os
+from notification_manager import NotificationManager
 
 
 CHROME_PATH = os.environ.get("file_path") # your local path to the chrome driver app
@@ -12,6 +13,10 @@ LOCATION = "all midtown"
 MAX_PRICE = 3000
 message = "Please complete the captcha in order to proceed."
 email = os.environ.get("email")
+notification = NotificationManager()
+address = []
+price = []
+link = []
 
 
 class ApartmentHuntBot:
@@ -92,9 +97,22 @@ class ApartmentHuntBot:
                                                           '/button').click()
 
     def get_search_results(self):
-        """retrieve search results from website"""
+        """retrieve search results from website and collect it into lists"""
         sleep(10)
-        pass
+        try:
+            addresses = self.driver.find_elements_by_class_name('details-title')
+            for p in range(len(addresses)):
+                address.append(addresses[p].text)
+            prices = self.driver.find_elements_by_class_name('price-info')
+            for p in range(len(prices)):
+                price.append(prices[p].text)
+            links = self.driver.find_element_by_tag_name('a.details-titleLink jsCardLinkGA')
+            for p in range(len(links)):
+                link.append(links[p].text)
+        except NoSuchElementException:
+            sleep(3)
+            self.pop_up()
+
 
     def captcha(self):
         """function used to send a text and email so I can bypass the captcha manually"""
@@ -114,3 +132,9 @@ class ApartmentHuntBot:
         # sleep(5)
         # self.actions.release(captcha_x, captcha_y)
         # self.search_input()
+
+    def pop_up(self):
+        """function to bypass the calendar pop up by clicking on the got it anchor tag"""
+        sleep(2)
+        self.driver.find_element_by_link_text('Got It').click()
+        self.get_search_results()
