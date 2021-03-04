@@ -7,7 +7,7 @@ import os
 from notification_manager import NotificationManager
 
 
-CHROME_PATH = os.environ.get("file_path") # your local path to the chrome driver app
+CHROME_PATH = os.environ.get("file_path") # local path to the chrome driver app
 LOCATION = "all midtown"
 MAX_PRICE = 3000
 message = "Please complete the captcha in order to proceed."

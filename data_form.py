@@ -1,8 +1,8 @@
 import os
 from selenium import webdriver
 
-FORM = os.environ.get("FORM_LINK") # your form link goes here
-CHROME_PATH = os.environ.get("file_path") # your local path to the chrome driver app
+FORM = os.environ.get("FORM_LINK") # form link goes here
+CHROME_PATH = os.environ.get("file_path") # local path to the chrome driver app
 
 
 class DataForm:

@@ -1,13 +1,15 @@
+import os
 import smtplib
 from twilio.rest import Client
 
-TWILIO_SID = T_SID
-TWILIO_AUTH_TOKEN = T_TOKEN
-TWILIO_VIRTUAL_NUMBER = T_NUMBER
-TWILIO_VERIFIED_NUMBER = SENDER_NUMBER
-MAIL_PROVIDER_SMTP_ADDRESS = "smtp.gmail.com"
-MY_EMAIL = EMAIL
-MY_PASSWORD = PASSWORD
+TWILIO_SID = os.environ.get('T_SID') # twilio string identifier
+TWILIO_AUTH_TOKEN = os.environ.get('T_TOKEN') # twilio authorization token
+TWILIO_VIRTUAL_NUMBER = os.environ.get('T_NUMBER') # twilio virtual number
+TWILIO_VERIFIED_NUMBER = os.environ.get('SENDER_NUMBER') # number used to open the account
+MAIL_PROVIDER_SMTP_ADDRESS = "smtp.gmail.com" # mail provider
+MY_EMAIL = os.environ.get('getEMAIL') # email used to send communications
+MY_PASSWORD = os.environ.get('PASSWORD') # email's password
+
 
 class NotificationManager:
 
@@ -29,6 +31,6 @@ class NotificationManager:
             for email in emails:
                 connection.sendmail(
                     from_addr=MY_EMAIL,
-                    to_addrs=email,
-                    msg=f"Subject:New Low Price Flight!\n\n{message}\n".encode('utf-8')
+                    to_addrs=email, # enter recipient address
+                    msg=f"Subject:Apartment Hunt Verification\n\n{message}\n".encode('utf-8')
                 )
