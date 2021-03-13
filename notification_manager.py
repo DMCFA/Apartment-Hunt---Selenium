@@ -18,6 +18,7 @@ class NotificationManager:
         self.client = Client(TWILIO_SID, TWILIO_AUTH_TOKEN)
 
     def send_sms(self, message):
+        """send an sms using Twillio API"""
         message = self.client.messages.create(
             body= MESSAGE,
             from_=TWILIO_VIRTUAL_NUMBER,
@@ -26,6 +27,7 @@ class NotificationManager:
         print(message.sid)
 
     def send_emails(self, emails, message):
+        """send an email using the smtp library"""
         with smtplib.SMTP(MAIL_PROVIDER_SMTP_ADDRESS) as connection:
             connection.starttls()
             connection.login(MY_EMAIL, MY_PASSWORD)
