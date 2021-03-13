@@ -9,6 +9,7 @@ TWILIO_VERIFIED_NUMBER = os.environ.get('SENDER_NUMBER') # number used to open t
 MAIL_PROVIDER_SMTP_ADDRESS = "smtp.gmail.com" # mail provider
 MY_EMAIL = os.environ.get('getEMAIL') # email used to send communications
 MY_PASSWORD = os.environ.get('PASSWORD') # email's password
+MESSAGE = 'Please go to the street easy website and bypass the captcha.'
 
 
 class NotificationManager:
@@ -18,7 +19,7 @@ class NotificationManager:
 
     def send_sms(self, message):
         message = self.client.messages.create(
-            body=message,
+            body= MESSAGE,
             from_=TWILIO_VIRTUAL_NUMBER,
             to=TWILIO_VERIFIED_NUMBER,
         )
@@ -32,5 +33,5 @@ class NotificationManager:
                 connection.sendmail(
                     from_addr=MY_EMAIL,
                     to_addrs=email, # enter recipient address
-                    msg=f"Subject:Apartment Hunt Verification\n\n{message}\n".encode('utf-8')
+                    msg=f"Subject:Apartment Hunt Verification\n\n{MESSAGE}\n".encode('utf-8')
                 )
